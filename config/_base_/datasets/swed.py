@@ -3,8 +3,8 @@ dataset_type = 'SWEDDataset'
 data_root = '/workspaces/songbingze/datasets/SWED'
 crop_size = (256, 256)
 train_pipeline = [
-    dict(type='LoadImageFromFile'),
-    dict(type='LoadAnnotations'),
+    dict(type='LoadNpyImageFromFile'),
+    dict(type='LoadNpyAnnotations', reduce_zero_label=False),
     dict(
         type='RandomResize',
         scale=(256, 256),
@@ -12,15 +12,15 @@ train_pipeline = [
         keep_ratio=True),
     dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
     dict(type='RandomFlip', prob=0.5),
-    dict(type='PhotoMetricDistortion'),
+    # dict(type='PhotoMetricDistortion'),
     dict(type='PackSegInputs')
 ]
 test_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadNpyImageFromFile'),
     dict(type='Resize', scale=(256, 256), keep_ratio=True),
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
-    dict(type='LoadAnnotations'),
+    dict(type='LoadNpyAnnotations', reduce_zero_label=False),
     dict(type='PackSegInputs')
 ]
 img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
@@ -56,6 +56,7 @@ val_dataloader = dict(
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
+        img_suffix='.tif', seg_map_suffix='.tif',
         type=dataset_type,
         data_root=data_root,
         data_prefix=dict(

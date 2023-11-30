@@ -11,8 +11,8 @@ class SWEDDataset(BaseSegDataset):
         classes= ('background', 'water'),
         palette= [[0], [1]],
     )
-    def __init__(self, **kwargs):
-        super().__init__(img_suffix='.npy', seg_map_suffix='.npy', **kwargs)
+    def __init__(self, img_suffix='.npy', seg_map_suffix='.npy', **kwargs):
+        super().__init__(img_suffix=img_suffix, seg_map_suffix=seg_map_suffix, **kwargs)
 
     def load_data_list(self) -> List[dict]:
         data_list = []
