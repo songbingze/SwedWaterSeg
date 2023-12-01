@@ -12,3 +12,6 @@ pip install ftfy regex
 ```
 
 Now, its work on HRNet model.
+```
+CUDA_VISIBLE_DEVICES=0 python tools/train.py config/hrnet/fcn_hr18_4xb2-160k_swed-256x256.py
+```
