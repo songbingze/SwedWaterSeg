@@ -28,7 +28,10 @@ class SWEDDataset(BaseSegDataset):
                 backend_args=self.backend_args):
             data_info = dict(img_path=osp.join(img_dir, img))
             if ann_dir is not None:
-                seg_map = img[:-_suffix_len][:61] + "chip" + img[:-_suffix_len][66:] + self.seg_map_suffix
+                if self.data_prefix['img_path'].split('/')[-2] == 'train':
+                    seg_map = img[:-_suffix_len][:61] + "chip" + img[:-_suffix_len][66:] + self.seg_map_suffix
+                if self.data_prefix['img_path'].split('/')[-2] == 'test':
+                    seg_map = img[:-_suffix_len][:61] + "label" + img[:-_suffix_len][66:] + self.seg_map_suffix
                 data_info['seg_map_path'] = osp.join(ann_dir, seg_map)
             data_info['label_map'] = self.label_map
             data_info['reduce_zero_label'] = self.reduce_zero_label

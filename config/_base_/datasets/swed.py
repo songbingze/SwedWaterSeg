@@ -40,7 +40,7 @@ tta_pipeline = [
         ])
 ]
 train_dataloader = dict(
-    batch_size=96,
+    batch_size=64,
     num_workers=8,
     persistent_workers=True,
     sampler=dict(type='InfiniteSampler', shuffle=True),
@@ -60,7 +60,7 @@ val_dataloader = dict(
         type=dataset_type,
         data_root=data_root,
         data_prefix=dict(
-            img_path='test/images', seg_map_path='test/images'),
+            img_path='test/images', seg_map_path='test/labels'),
         pipeline=test_pipeline))
 test_dataloader = val_dataloader
 

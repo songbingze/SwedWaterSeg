@@ -66,7 +66,7 @@ class LoadNpyImageFromFile(BaseTransform):
             if filename.endswith('.npy'):
                 img = np.load(filename)
             else:
-                img = tiffile.imread(filename)
+                img = tiffile.imread(filename).astype(np.float32).transpose(1, 2, 0)
             for i in range(img.shape[2]):
                 img[:, :, i] = cv2.normalize(img[:, :, i], None, 0, 255, cv2.NORM_MINMAX)
         except Exception as e:
